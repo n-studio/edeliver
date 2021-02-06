@@ -217,7 +217,7 @@ rvmrc_trust() {
 
     status "Trusting rvmrc in $DELIVER_TO"
     __remote "
-      source $PROFILE
+      [ -f $PROFILE ] && source $PROFILE
       set -e
       rvm rvmrc trust $DELIVER_TO $SILENCE
     "
@@ -232,7 +232,7 @@ bundle_install() {
 
   status "Installing gems with bundler"
   __remote "
-    source $PROFILE
+    [ -f $PROFILE ] && source $PROFILE
     set -e
     cd $DELIVER_TO $SILENCE
     if [[ \$APP_ENV = production ]] || [[ \$RACK_ENV = production ]] || [[ \$RAILS_ENV = production ]]
@@ -251,7 +251,7 @@ npm_install() {
 
   status "Installing modules with npm"
   __remote "
-    source $PROFILE
+    [ -f $PROFILE ] && source $PROFILE
     set -e
     cd $DELIVER_TO $SILENCE
     npm install $SILENCE
@@ -269,7 +269,7 @@ foreman_export() {
   test -n "$FOREMAN_EXTRAS" && _foreman="$_foreman $FOREMAN_EXTRAS"
 
   __remote "
-    source $PROFILE
+    [ -f $PROFILE ] && source $PROFILE
     set -e
     cd $DELIVER_TO $SILENCE
     $_foreman $SILENCE
